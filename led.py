@@ -1,26 +1,32 @@
-from blink1.blink1 import Blink1
-
-b1 = Blink1()
+import subprocess
 
 
 def turn_red():
-    b1.fade_to_color(1000, 'red')
+    run(["blink1-tool", "--red"])
 
 
 def turn_blue():
-    b1.fade_to_color(1000, 'blue')
+    run(["blink1-tool", "--blue"])
 
 
 def turn_yellow():
-    b1.fade_to_color(1000, 'yellow')
+    run(["blink1-tool", "--yellow"])
 
 
 def turn_off():
-    b1.off()
+    run(["blink1-tool", "--off"])
 
 
 def turn_color(color):
     if color == 'off':
-        b1.off()
+        turn_off()
     else:
-        b1.fade_to_color(1000, color)
+        run(["blink1-tool", "--"+color])
+
+
+def run(cmd):
+    proc = subprocess.Popen(cmd,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE,
+                            )
+    proc.communicate()

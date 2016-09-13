@@ -51,12 +51,10 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         return True
 
     def on_message(self, message):
-        # print 'tornado received from client: %s' % json.dumps(message)
-        # self.write_message('ack')
         try:
             msg = json.loads(message)
             if 'led' in msg:
-                led.turn_color(msg.led)
+                led.turn_color(msg['led'])
             else:
                 input_queue.put(message)
         except ValueError:
